@@ -104,3 +104,7 @@ button[type="reset"] {
 button[type="reset"]:hover {
   background-color: #bdbdbd;
 }
+
+#mensaje.error {
+  color: #e74c3c;
+}

@@ -16,7 +16,7 @@ runs:
           if [ -f "$archivo" ]; then
             echo "$archivo, esta en el repo"
           else 
-            echo ·$archivo, no esta en la ruta"
+            echo "$archivo, no esta en la ruta"
             exit 1
           fi
         done

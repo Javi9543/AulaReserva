@@ -19,7 +19,7 @@ function mostrarAulas(aulas) {
 }
 
 (function () {
-  cargarAulas("/backend/public/index.php", mostrarAulas);
+  cargarAulas("http://localhost:8000/index.php", mostrarAulas);
 
   const formulario = document.getElementById("formulario-reserva");
   const mensaje = document.getElementById("mensaje");
@@ -47,12 +47,12 @@ function mostrarAulas(aulas) {
     };
 
     //hago la peticion POST al index.php
-    fetch("http://localhost:8000/reservas.php", {
+    fetch("http://localhost:8000/index.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(datosReserva),
+      body: JSON.stringify(reserva),
       })
       .then((response) => response.json())
       .then((data) => {

@@ -5,7 +5,7 @@
     //Compruebo que el método sea un post
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $input = json_decode(file_get_contents('php://input'), true); //recojo los datos que ha introducido el usuario
+        $input = json_decode(file_get_contents('php://input'), true) //recojo los datos que ha introducido el usuario
 
         $aula = $input['aula'] ?? null;
         $fecha = $input['fecha'] ?? null;

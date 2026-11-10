@@ -25,9 +25,7 @@ jobs:
     - name: Comprobacion Front
       uses: ./.github/actions/comp-rutas/
       with:
-        rutas: | 
-          frontend/index.html
-          frontend/js/app.js
+        rutas: frontend/index.html frontend/js/app.js
     - name: Comprobacion Sintaxis JS
       run: node --check frontend/js/app.js
 
@@ -38,14 +36,10 @@ jobs:
     - name: Comprobacion back
       uses: ./.github/actions/comp-rutas/
       with:
-        rutas: | 
-          backend/public/index.php
-          backend/public/reservas.php
+        rutas: backend/public/index.php backend/public/reservas.php
 
     - name: Comprobacion Sintaxis PHP
-      run: |
-        php -l backend/public/index.php
-        php -l backend/public/reservas.php
+      run: php -l backend/public/index.php php -l backend/public/reservas.php
 
   Comprobaciones:
     needs: [front, back]

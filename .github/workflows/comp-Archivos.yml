@@ -14,8 +14,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: compWorkflowDuplicado ${{ github.workflow }} -$ {{ github.ref }}
-  cancel-in-progress: true;
+  group: compWorkflowDuplicado ${{ github.workflow }} -${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   front:
@@ -25,11 +25,11 @@ jobs:
     - name: Comprobacion Front
       uses: ./.github/actions/comp-rutas/
       with:
-        ruta: | 
+        rutas: | 
           frontend/index.html
           frontend/js/app.js
     - name: Comprobacion Sintaxis JS
-      run: node --check frontend/app.js
+      run: node --check frontend/js/app.js
 
   back:
     runs-on: ubuntu-latest
@@ -38,9 +38,9 @@ jobs:
     - name: Comprobacion back
       uses: ./.github/actions/comp-rutas/
       with:
-        ruta: | 
+        rutas: | 
           backend/public/index.php
-          backend/pubic/reservas.php
+          backend/public/reservas.php
 
     - name: Comprobacion Sintaxis PHP
       run: |
@@ -51,4 +51,4 @@ jobs:
     needs: [front, back]
     runs-on: ubuntu-latest
     steps: 
-      - echo "Los archivos de frontend y backend están OK".
+      - run: echo "Los archivos de frontend y backend están OK."

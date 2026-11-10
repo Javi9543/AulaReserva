@@ -39,7 +39,9 @@ jobs:
         rutas: backend/public/index.php backend/public/reservas.php
 
     - name: Comprobacion Sintaxis PHP
-      run: php -l backend/public/index.php php -l backend/public/reservas.php
+      run:  | 
+        php -l backend/public/index.php 
+        php -l backend/public/reservas.php
 
   Comprobaciones:
     needs: [front, back]

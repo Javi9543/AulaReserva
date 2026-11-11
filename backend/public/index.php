@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . '/../bootstrap.php'; //incorporo la BD al php
+    require_once __DIR__ . '/../src/bootstrap.php'; //incorporo la BD al php
     header("Content-Type: application/json; charset=utf-8"); // defino que la respuesta sera en JSON 
     header("Access-Control-Allow-Origin: *"); //permito que cualquier origen, envie peticiones a mi backend
     $metodo = $_SERVER['REQUEST_METHOD']; //defino la linea para definir el metodo para cada peticion http

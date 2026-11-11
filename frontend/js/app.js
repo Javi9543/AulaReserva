@@ -101,9 +101,7 @@ function cancelarReserva(id) {
         mensaje.textContent = data.message; //se recibe bien la respuesta
         mensaje.className = "ok";
         formulario.reset();
+        cargaReservas();
       });
-
-    mensaje.textContent = `Reserva realizada: ${aula} el ${fecha} a las ${hora} por ${usuario}`;
-    mensaje.className = "ok";
   });
 })();

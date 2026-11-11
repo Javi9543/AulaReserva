@@ -29,7 +29,7 @@ function mostrarDesarrollo() {
 
 //cargo reservas
 function cargaReservas() {
-  fetch("http://localhost:8000/api/aulas")
+  fetch("http://localhost:8000/api/reservas")
     .then((res) => res.json())
     .then((numReserva) => {
       let cuerpo = document.getElementById("cuerpo-reservas");
@@ -54,7 +54,7 @@ function cargaReservas() {
 
 function cancelarReserva(id) {
   fetch (`http://localhost:8000/api/reservas/${id}`, { method: "DELETE" })
-    .then((res) => res.json)
+    .then((res) => res.json())
     .then(() => cargaReservas());
 }
 

@@ -17,7 +17,7 @@ jobs:
       run: cp -r frontend backend database dist/
 
     - name: archivo version.txt
-      run: 
+      run: |
         echo "Proyecto-AulaReserva" > dist/version.txt
         echo "Rama - $GITHUB_REF_NAME" >> dist/version.txt
         echo "Commit - $GITHUB_SHA" >> dist/version.txt

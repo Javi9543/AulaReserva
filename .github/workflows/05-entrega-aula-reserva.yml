@@ -2,7 +2,9 @@ name: 05 - Entrega Colaborativa de la app
 
 on:
   workflow_dispatch:
-
+    branches: 
+      - develop
+      - feature/*
 jobs:
   empaquetar: 
     runs-on: ubuntu-latest

@@ -1,0 +1,49 @@
+name: 05 - Entrega Colaborativa de la app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  empaquetar: 
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v7
+    
+    - name: carpeta dist 
+      run: mkdir dist
+    
+    - name: copiar carpetas a dist
+      run: cp -r frontend backend database dist/
+
+    - name: archivo version.txt
+      run: |
+        echo "Proyecto-AulaReserva" > dist/version.txt
+        echo "Rama - $GITHUB_REF_NAME" >> dist/version.txt
+        echo "Commit - $GITHUB_SHA" >> dist/version.txt
+        echo "Ejecucion - $GITHUB_RUN_NUMBER" >> dist/version.txt
+    
+    - name: subir artefacto
+      uses: actions/upload-artifact@v4
+      with:
+        name: AulaReserva-${{ github.run_number }}
+        path: dist/
+        if-no-files-found: error
+
+  comprobar: 
+    runs-on: ubuntu-latest
+    needs: empaquetar
+    steps: 
+      - name: descargar artefacto
+        uses: actions/download-artifact@v4
+        with:
+          name: AulaReserva-${{ github.run_number }}
+          path: entrega/
+      - name: comprobar archivos
+        run: |
+          test -f entrega/frontend/index.html
+          test -f entrega/backend/public/index.php
+          test -f entrega/database/schema.sql
+          test -f entrega/version.txt
+      - name: mostrar version
+        run: cat entrega/version.txt

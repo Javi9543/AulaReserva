@@ -1,15 +1,16 @@
 //Pido aulas al php
 function cargarAulas(url, aulas) {
   fetch(url)
-    .then(response => response.json())
-    .then(data => aulas(data))
-    .catch(error => console.error("Error al cargar aulas:", error));
+    .then((response) => response.json())
+    .then((data) => aulas(data))
+    .catch((error) => console.error("Error al cargar aulas:", error));
 }
 
-function mostrarAulas(aulas){
-    let select = document.getElementById("aula");
+//muestro las aulas
+function mostrarAulas(aulas) {
+  let select = document.getElementById("aula");
 
-    aulas.forEach(aula => {
+  aulas.forEach((aula) => {
     const option = document.createElement("option");
     option.value = aula;
     option.textContent = aula;
@@ -17,9 +18,8 @@ function mostrarAulas(aulas){
   });
 }
 
-(function() {
-
-  cargarAulas("/backend/public/index.php", mostrarAulas);
+(function () {
+  cargarAulas("http://localhost:8000/index.php", mostrarAulas);
 
   const formulario = document.getElementById("formulario-reserva");
   const mensaje = document.getElementById("mensaje");
@@ -38,8 +38,30 @@ function mostrarAulas(aulas){
       return;
     }
 
+    //proceso los datos para el php
+    let reserva = {
+      aula: aula,
+      fecha: fecha,
+      hora: hora,
+      responsable: usuario,
+    };
+
+    //hago la peticion POST al index.php
+    fetch("http://localhost:8000/index.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reserva),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        mensaje.textContent = data.message; //se recibe bien la respuesta
+        mensaje.className = "ok";
+        formulario.reset();
+      });
+
     mensaje.textContent = `Reserva realizada: ${aula} el ${fecha} a las ${hora} por ${usuario}`;
     mensaje.className = "ok";
   });
-
 })();

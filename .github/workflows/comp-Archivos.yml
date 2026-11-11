@@ -10,14 +10,41 @@ on:
       - develop
   workflow_dispatch:
 
-jobs:
-  validar: 
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
 
+concurrency:
+  group: compWorkflowDuplicado ${{ github.workflow }} -${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  front:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Comprobacion Front
+      uses: ./.github/actions/comp-rutas/
+      with:
+        rutas: frontend/index.html frontend/js/app.js
+    - name: Comprobacion Sintaxis JS
+      run: node --check frontend/js/app.js
+
+  back:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Comprobacion back
+      uses: ./.github/actions/comp-rutas/
+      with:
+        rutas: backend/public/index.php backend/public/reservas.php
+
+    - name: Comprobacion Sintaxis PHP
+      run:  | 
+        php -l backend/public/index.php 
+        php -l backend/public/reservas.php
+
+  Comprobaciones:
+    needs: [front, back]
+    runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v7
-      - name: uso de action para comprobar las rutas
-        id: comprobacion
-        uses: ./.github/actions/comp-rutas
-        with: 
-          rutas: backend/public/index.php frontend/css/styles.css frontend/js/app.js frontend/index.html
+      - run: echo "Los archivos de frontend y backend están OK."

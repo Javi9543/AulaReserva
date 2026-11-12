@@ -1,5 +1,4 @@
 name: 05 - Entrega Colaborativa de la app
-
 on:
   pull_request:
     branches: 
@@ -37,7 +36,6 @@ jobs:
         name: AulaReserva-${{ github.run_number }}
         path: dist/
         if-no-files-found: error
-
   comprobar: 
     runs-on: ubuntu-latest
     needs: empaquetar

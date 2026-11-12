@@ -1,10 +1,14 @@
 name: 06 - Preparacion de AulaReserva
 
 on:
-  workflow_dispatch:
+  pull_request:
+    - develop
+    - feature/**
+  push: 
     branches: 
       - develop
-      - 'feature/**'
+      - feature/**
+  workflow_dispatch:
 
 jobs:
   preparacion:

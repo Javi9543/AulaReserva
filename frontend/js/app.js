@@ -9,19 +9,41 @@ function cargarAulas(url, aulas) {
 //muestro las aulas
 function mostrarAulas(aulas) {
   let select = document.getElementById("aula");
+  let listaAulas = document.getElementById("lista-aulas");
+
+  if (select){
+    select.innerHTML = "";
+  }
+
+  if (listaAulas) {
+    listaAulas.innerHTML = "";
+  }
 
   aulas.forEach((aula) => {
-    const option = document.createElement("option");
-    option.value = aula;
-    option.textContent = aula;
-    select.appendChild(option);
+    if (select) {
+        const opcion = document.createElement("option");
+        opcion.value = aula.id;
+        opcion.textContent = aula.nombre;
+        select.appendChild(opcion);
+    }
+
+    if (listaAulas){
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta";
+      tarjeta.innerHTML = `
+        <h3>${aula.nombre}</h3>
+        <p>ID: ${aula.id}</p>
+      `;
+      listaAulas.appendChild(tarjeta);
+    }
+    
   });
 }
 
 //muestro si esta en desarrollo o en produccion
 function mostrarDesarrollo() {
   let ent = document.getElementById("entorno-app");
-  if (window.APP_CONFIG) {
+  if (window.APP_CONFIG && ent) {
     ent.textContent =
       window.APP_CONFIG.env === "production" ? "Producción" : "Desarrollo";
   }
@@ -82,7 +104,7 @@ function cancelarReserva(id) {
 
     //proceso los datos para el php
     let reserva = {
-      aula: aula,
+      aula_id: aula,
       fecha: fecha,
       hora: hora,
       responsable: usuario,
@@ -96,12 +118,24 @@ function cancelarReserva(id) {
       },
       body: JSON.stringify(reserva),
     })
-      .then((response) => response.json())
+      .then(async (res) => {
+        const datos = await res.json();
+        
+        if ((!res.ok)) {
+          throw new Error(datos.error || datos.message || "Error al hacer la reserva")
+        }
+
+        return datos
+      })
       .then((data) => {
         mensaje.textContent = data.message; //se recibe bien la respuesta
         mensaje.className = "ok";
         formulario.reset();
         cargaReservas();
-      });
+      })
+      .catch((error) => {
+        mensaje.textContent= error.message;
+        mensaje.className = "error"
+      })
   });
 })();

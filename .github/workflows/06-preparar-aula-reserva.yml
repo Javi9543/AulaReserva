@@ -17,12 +17,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
 
-      - name: generar front/config.js 
+      - name: generar front/config.js
         run: |
-          echo "window.APP_CONFIG" = {" > frontend/config.js"}
-          echo "  appName: '${{ vars.APP_NAME }}'," >> frontend/config.js
-          echo "  env: '${{ vars.APP_ENV }}'" >> frontend/config.js
-          echo "} ;" >> frontend/config.js
+          cat << 'EOF' > frontend/config.js
+          window.APP_CONFIG = {
+            appName: '${{ vars.APP_NAME }}',
+            env: '${{ vars.APP_ENV }}'
+          };
+          EOF
       
       - name: carpeta dist 
         run: mkdir dist

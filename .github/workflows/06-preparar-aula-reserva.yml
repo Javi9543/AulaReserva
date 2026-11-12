@@ -2,6 +2,7 @@ name: 06 - Preparacion de AulaReserva
 
 on:
   pull_request:
+    branches:
     - develop
     - feature/**
   push: 

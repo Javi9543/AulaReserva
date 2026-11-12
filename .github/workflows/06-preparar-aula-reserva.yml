@@ -19,7 +19,7 @@ jobs:
 
       - name: generar front/config.js 
         run: |
-          echo "window.APP_CONFIG = {" > frontend/config.js"}
+          echo "window.APP_CONFIG" = {" > frontend/config.js"}
           echo "  appName: '${{ vars.APP_NAME }}'," >> frontend/config.js
           echo "  env: '${{ vars.APP_ENV }}'" >> frontend/config.js
           echo "} ;" >> frontend/config.js

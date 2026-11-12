@@ -1,10 +1,16 @@
 name: 05 - Entrega Colaborativa de la app
 
 on:
-  workflow_dispatch:
+  pull_request:
     branches: 
       - develop
       - 'feature/**'
+  push: 
+    branches: 
+      - develop
+      - 'feature/**'
+  workflow_dispatch:
+
 jobs:
   empaquetar: 
     runs-on: ubuntu-latest

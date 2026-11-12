@@ -16,7 +16,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v7
-
       - name: generar front/config.js
         run: |
           cat << 'EOF' > frontend/config.js
@@ -38,3 +37,4 @@ jobs:
           name: ${{ vars.APP_NAME }}-${{ github.run_number }}
           path: dist/
           if-no-files-found: error
+          

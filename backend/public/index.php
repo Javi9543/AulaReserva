@@ -49,6 +49,7 @@
 
         http_response_code(201); //esto indica todo creado con exito
         echo json_encode(['message' => 'Reserva de aula recibida correctamente']); //Mensaje cuando se ha enviado la reserva
+        exit;
     }
 
     //consultar reservas guardadas

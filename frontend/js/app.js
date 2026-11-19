@@ -119,12 +119,22 @@ function cancelarReserva(id) {
       },
       body: JSON.stringify(reserva),
     })
-      .then((response) => response.json())
+      .then(async (res) => {
+        const datos = await res.json();
+        if (!res.ok) {
+          throw new Error(datos.error || datos.message || "Error al hacer la reserva");
+        }
+        return datos;
+      })
       .then((data) => {
-        mensaje.textContent = data.message; //se recibe bien la respuesta
+        mensaje.textContent = data.message;
         mensaje.className = "ok";
         formulario.reset();
         cargaReservas();
+      })
+      .catch((error) => {
+        mensaje.textContent = error.message;
+        mensaje.className = "error";
       });
   });
 })();

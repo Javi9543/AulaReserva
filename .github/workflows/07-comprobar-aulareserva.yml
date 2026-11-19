@@ -4,6 +4,9 @@ on:
   push: 
     branches: 
       [develop, 'feature/**']
+  pull_request: 
+    branches: 
+      [release]
   workflow_dispatch:
 
 permissions:

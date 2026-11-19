@@ -3,43 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Javier Muñoz Parra">
     <link rel="stylesheet" href="./css/styles.css">
-    <title>Reservar Aula/s</title>
+    <title>AulaReserva</title>
 </head>
 <body>
-    <!-- Formulario de reserva de aulas -->
-    <form id="formulario-reserva">
-        <fieldset>
-            <legend>Reservar Aula</legend>
-            <fieldset>
+    <!-- Cabecera -->
+    <header>
+        <h1>AulaReserva</h1>
+        <p id="entorno-app"></p>
+    </header>
+
+    <main>
+        <!-- Tarjetas de aulas -->
+        <section>
+            <h2>Aulas disponibles</h2>
+            <div id="lista-aulas"></div>
+        </section>
+
+        <!-- Formulario de reserva -->
+        <section>
+            <h2>Reservar aula</h2>
+            <form id="formulario-reserva">
+                <label for="aula">Aula</label>
                 <select name="aula" id="aula">
                     <option value="">Seleccione un aula a reservar</option>
                 </select>
-        
-                <br><br>
+
                 <label for="fecha">Fecha de reserva</label>
-                <input type="date" name="fecha" id="fecha"> <br><br>
-        
-                <label for="hora">¿A que hora quieres reservar?</label>
-                <input type="time" id="hora" name="hora"> <br><br>
-        
-                <label for="usuario">¿Quien eres?</label>
-                <input type="text" name="usuario" id="usuario" placeholder="Introduzca su nombre"> <br><br>
-                
-                
-            </fieldset>
-            <br>
-            <fieldset>
-                <button type="submit">¡Reservar Aula!</button>
-                <button type="reset">Resetear Formulario</button>
-            </fieldset>
-        </fieldset>
-    </form>
-    
-    <!-- por si existe algun error -->
-    <p id="mensaje"></p>
-    <!-- Enlace al archivo JS -->
+                <input type="date" name="fecha" id="fecha">
+
+                <label for="hora">¿A qué hora quieres reservar?</label>
+                <input type="time" name="hora" id="hora">
+
+                <label for="usuario">¿Quién eres?</label>
+                <input type="text" name="usuario" id="usuario" placeholder="Introduzca su nombre">
+
+                <button type="submit">¡Reservar aula!</button>
+                <button type="reset">Resetear formulario</button>
+            </form>
+            <p id="mensaje"></p>
+        </section>
+
+        <!-- Tabla de reservas -->
+        <section>
+            <h2>Reservas (<span id="contador-reservas">0</span>)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aula</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Responsable</th>
+                        <th>Cancelar</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-reservas"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- config.js antes que app.js -->
+    <script src="./config.js"></script>
     <script src="./js/app.js"></script>
 </body>
 </html>

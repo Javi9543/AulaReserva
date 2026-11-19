@@ -1,0 +1,40 @@
+name: 06 - Preparacion de AulaReserva
+on:
+  pull_request:
+    branches:
+      - develop
+      - feature/**
+  push: 
+    branches: 
+      - develop
+      - feature/**
+  workflow_dispatch:
+
+jobs:
+  preparacion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7
+      - name: generar front/config.js
+        run: |
+          cat << 'EOF' > frontend/config.js
+          window.APP_CONFIG = {
+            appName: '${{ vars.APP_NAME }}',
+            env: '${{ vars.APP_ENV }}'
+          };
+          EOF
+      
+      - name: carpeta dist 
+        run: mkdir dist
+    
+      - name: copiar carpetas a dist
+        run: cp -r frontend backend database dist/
+
+      - name: subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ vars.APP_NAME }}-${{ github.run_number }}
+          path: dist/
+          if-no-files-found: error
+          

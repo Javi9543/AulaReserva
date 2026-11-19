@@ -9,12 +9,68 @@ function cargarAulas(url, aulas) {
 //muestro las aulas
 function mostrarAulas(aulas) {
   let select = document.getElementById("aula");
+  let listaAulas = document.getElementById("lista-aulas");
+
+  if (select){
+    select.innerHTML = "";
+  }
+
+  if (listaAulas) {
+    listaAulas.innerHTML = "";
+  }
 
   aulas.forEach((aula) => {
-    const option = document.createElement("option");
-    option.value = aula;
-    option.textContent = aula;
-    select.appendChild(option);
+    if (select) {
+        const opcion = document.createElement("option");
+        opcion.value = aula.id;
+        opcion.textContent = aula.nombre;
+        select.appendChild(opcion);
+    }
+
+    if (listaAulas){
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta";
+      tarjeta.innerHTML = `
+        <h3>${aula.nombre}</h3>
+        <p>ID: ${aula.id}</p>
+      `;
+      listaAulas.appendChild(tarjeta);
+    }
+    
+  });
+}
+
+//muestro si esta en desarrollo o en produccion
+function mostrarDesarrollo() {
+  let ent = document.getElementById("entorno-app");
+  if (window.APP_CONFIG && ent) {
+    ent.textContent =
+      window.APP_CONFIG.env === "production" ? "Producción" : "Desarrollo";
+  }
+}
+
+//cargo reservas
+function cargaReservas() {
+  fetch("http://localhost:8000/api/reservas")
+    .then((res) => res.json())
+    .then((numReserva) => {
+      let cuerpo = document.getElementById("cuerpo-reservas");
+      let contador = document.getElementById("contador-reservas");
+
+      cuerpo.innerHTML = "";
+      contador.textContent = numReserva.length;
+
+      numReserva.forEach((reserva) => {
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+          <td>${reserva.aula_id}</td>
+          <td>${reserva.fecha}</td>
+          <td>${reserva.hora}</td>
+          <td>${reserva.responsable}</td>
+          <td><button onclick="cancelarReserva(${reserva.id})">Cancelar</button></td>
+        `;
+        cuerpo.appendChild(fila);
+      });
   });
 }
 
@@ -83,7 +139,7 @@ function cancelarReserva(id) {
 
     //proceso los datos para el php
     let reserva = {
-      aula: aula,
+      aula_id: aula,
       fecha: fecha,
       hora: hora,
       responsable: usuario,

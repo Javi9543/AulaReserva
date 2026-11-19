@@ -37,4 +37,3 @@ jobs:
           name: ${{ vars.APP_NAME }}-${{ github.run_number }}
           path: dist/
           if-no-files-found: error
-          

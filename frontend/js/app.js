@@ -2,7 +2,7 @@
 function cargarAulas(url, aulas) {
   fetch(url)
     .then((response) => response.json())
-    .then((data) => aulas(data))
+    .then((data) => aulas(data.aulas))
     .catch((error) => console.error("Error al cargar aulas:", error));
 }
 
@@ -31,7 +31,8 @@ function mostrarDesarrollo() {
 function cargaReservas() {
   fetch("http://localhost:8000/api/reservas")
     .then((res) => res.json())
-    .then((numReserva) => {
+    .then((data) => {
+       let numReserva = data.reservas;
       let cuerpo = document.getElementById("cuerpo-reservas");
       let contador = document.getElementById("contador-reservas");
 

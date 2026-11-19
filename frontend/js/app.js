@@ -43,40 +43,6 @@ function mostrarAulas(aulas) {
 //muestro si esta en desarrollo o en produccion
 function mostrarDesarrollo() {
   let ent = document.getElementById("entorno-app");
-  if (window.APP_CONFIG && ent) {
-    ent.textContent =
-      window.APP_CONFIG.env === "production" ? "Producción" : "Desarrollo";
-  }
-}
-
-//cargo reservas
-function cargaReservas() {
-  fetch("http://localhost:8000/api/reservas")
-    .then((res) => res.json())
-    .then((numReserva) => {
-      let cuerpo = document.getElementById("cuerpo-reservas");
-      let contador = document.getElementById("contador-reservas");
-
-      cuerpo.innerHTML = "";
-      contador.textContent = numReserva.length;
-
-      numReserva.forEach((reserva) => {
-        let fila = document.createElement("tr");
-        fila.innerHTML = `
-          <td>${reserva.aula_id}</td>
-          <td>${reserva.fecha}</td>
-          <td>${reserva.hora}</td>
-          <td>${reserva.responsable}</td>
-          <td><button onclick="cancelarReserva(${reserva.id})">Cancelar</button></td>
-        `;
-        cuerpo.appendChild(fila);
-      });
-  });
-}
-
-//muestro si esta en desarrollo o en produccion
-function mostrarDesarrollo() {
-  let ent = document.getElementById("entorno-app");
   if (window.APP_CONFIG) {
     ent.textContent =
       window.APP_CONFIG.env === "production" ? "Producción" : "Desarrollo";
@@ -88,7 +54,7 @@ function cargaReservas() {
   fetch("http://localhost:8000/api/reservas")
     .then((res) => res.json())
     .then((data) => {
-       let numReserva = data.reservas;
+      let numReserva = data.reservas;
       let cuerpo = document.getElementById("cuerpo-reservas");
       let contador = document.getElementById("contador-reservas");
 

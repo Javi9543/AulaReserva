@@ -1,4 +1,3 @@
-name: Comprobar Archivos del repo
 
 on:
   push:

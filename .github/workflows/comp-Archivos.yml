@@ -1,1 +1,50 @@
+name: Comprobacion manual
+on:
+  push:
+    branches: 
+      - develop
+      - 'feature/**'
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: compWorkflowDuplicado ${{ github.workflow }} -${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  front:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Comprobacion Front
+      uses: ./.github/actions/comp-rutas/
+      with:
+        rutas: frontend/index.html frontend/js/app.js
+    - name: Comprobacion Sintaxis JS
+      run: node --check frontend/js/app.js
+
+  back:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Comprobacion back
+      uses: ./.github/actions/comp-rutas/
+      with:
+        rutas: backend/public/index.php backend/public/reservas.php
+
+    - name: Comprobacion Sintaxis PHP
+      run:  | 
+        php -l backend/public/index.php 
+        php -l backend/public/reservas.php
+
+  Comprobaciones:
+    needs: [front, back]
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo "Los archivos de frontend y backend están OK."
+      
